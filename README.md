@@ -18,4 +18,6 @@ This is a simple web application that allows users to search for books using the
 - requests: Used for making HTTP requests to the Google Books API.
 
 ![Search Screen](/Search.png)
+![Snowflake Monitoring](/Snowflake.png)
+![Result screen](/Result.png)
 
