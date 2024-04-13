@@ -17,4 +17,5 @@ This is a simple web application that allows users to search for books using the
 - dotenv: Used for managing environment variables.
 - requests: Used for making HTTP requests to the Google Books API.
 
+![Search Screen](search.png)
 
