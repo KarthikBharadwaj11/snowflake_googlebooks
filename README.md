@@ -8,7 +8,6 @@ This is a simple web application that allows users to search for books using the
 - The application fetches data from the Google Books API based on the user's query.
 - The search results are displayed in a table format with details such as title, authors, published date, description, and categories.
 - Duplicate data entry prevention: The application checks for duplicate titles and avoids displaying them again in the table.
-- Responsive design: The application is designed to work on various screen sizes, from desktop to mobile devices.
 
 ## Technologies Used
 
