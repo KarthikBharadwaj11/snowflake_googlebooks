@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #dc143c;
+}
+
+form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    padding: 8px 20px;
+    background-color: #2e2ec5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.book {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.book h2 {
+    margin-top: 0;
+}
+
+.book p {
+    margin: 5px 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+#resultsTable {
+    width: 100%;
+    border-collapse:separate;
+    border-spacing: 10px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the table headers */
+#resultsTable th {
+    background-color: #022953;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style for alternating row colors */
+#resultsTable tbody tr:nth-child(even) {
+    background-color: #5fc7ed;
+}
+
+/* Style for table cells */
+#resultsTable td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hover effect on table rows */
+#resultsTable tbody tr:hover {
+    background-color: #e9e9e9;
+}
+/* Style for the loading message */
+#loadingMessage {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style for the buffering animation */
+.buffering {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/* Keyframe animation for the buffering */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+/* Style for the scroll button */
+#scrollToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button 20px from the bottom */
+    right: 20px; /* Place the button 20px from the right */
+    z-index: 99; /* Make sure it appears above other elements */
+    border: none; /* Remove border */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text color */
+    cursor: pointer; /* Add cursor pointer on hover */
+    padding: 10px; /* Add padding */
+    border-radius: 50%; /* Make it round */
+}
+
+/* Show the scroll button when the user scrolls down */
+#scrollToTopBtn.show {
+    display: block; /* Show the button */
+}

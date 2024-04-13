@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Books Search</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        
+        #loadingMessage {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        
+        .buffering {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #007bff;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Books Search</h1>
+    <form id="searchForm">
+        <label for="query">Enter Search Query:</label>
+        <input type="text" id="query" name="query">
+        <button type="submit">Search</button>
+    </form>
+    <div id="loadingMessage" style="display: none;">
+        <p>Getting your results...</p>
+        <div class="buffering"></div>
+    </div>
+    <div id="resultsTableContainer" style="display: none;">
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Published Date</th>
+                    <th>Description</th>
+                    <th>Categories</th>
+                </tr>
+            </thead>
+            <tbody id="resultsTableBody">
+                
+            </tbody>
+        </table>
+    </div>
+
+    
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top" style="display: none;">Top</button>
+
+    <script>
+    // Function to fetch data from the backend API
+    function fetchBooks(query) {
+        
+        var loadingMessage = document.getElementById("loadingMessage");
+        loadingMessage.style.display = "block";
+        document.getElementById("scrollToTopBtn").style.display = "none";
+
+        fetch('/search-books?query=' + encodeURIComponent(query))
+        .then(response => {
+            console.log('API Response:', response);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Parsed Data:', data);
+            displayResults(data);
+        })
+        .catch(error => console.error('Error:', error))
+        .finally(() => {
+            
+            loadingMessage.style.display = "none";
+        });
+    }
+
+    // Function to display search results
+    function displayResults(data) {
+        var resultsTableContainer = document.getElementById("resultsTableContainer");
+        var resultsTableBody = document.getElementById("resultsTableBody");
+
+        // Keep track of titles already added to the table
+        var addedTitles = [];
+
+        resultsTableBody.innerHTML = ""; // Clear previous results
+
+        if (data.length > 0) {
+            resultsTableContainer.style.display = "block"; // Show the table if there are results
+            document.getElementById("scrollToTopBtn").style.display = "block";
+
+            // Populate the table with search results
+            data.forEach(book => {
+                // Check if the title is already added
+                if (!addedTitles.includes(book.volumeInfo.title)) {
+                    addedTitles.push(book.volumeInfo.title); // Add title to the list of added titles
+
+                    var row = document.createElement("tr");
+
+                    var titleCell = document.createElement("td");
+                    titleCell.textContent = book.volumeInfo.title || 'Title not available';
+                    row.appendChild(titleCell);
+
+                    var authorsCell = document.createElement("td");
+                    authorsCell.textContent = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Authors not available';
+                    row.appendChild(authorsCell);
+
+                    var publishedDateCell = document.createElement("td");
+                    publishedDateCell.textContent = book.volumeInfo.published_date || 'Date not available';
+                    row.appendChild(publishedDateCell);
+
+                    var descriptionCell = document.createElement("td");
+                    descriptionCell.textContent = book.volumeInfo.description || 'Description not available';
+                    row.appendChild(descriptionCell);
+
+                    var categoriesCell = document.createElement("td");
+                    categoriesCell.textContent = book.volumeInfo.categories ? book.volumeInfo.categories.join(', ') : 'Categories not available';
+                    row.appendChild(categoriesCell);
+
+                    resultsTableBody.appendChild(row);
+                }
+            });
+        } else {
+            resultsTableContainer.style.display = "none"; // Hide the table if there are no results
+            document.getElementById("scrollToTopBtn").style.display = "none"; 
+        }
+    }
+
+
+    // Event listener for form submission
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        var query = document.getElementById("query").value;
+        fetchBooks(query);
+    });
+
+    // When the user scrolls down 20px from the top of the document, show the scroll button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollToTopBtn.classList.add("show");
+        } else {
+            scrollToTopBtn.classList.remove("show");
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; 
+        document.documentElement.scrollTop = 0; 
+    }
+    </script>
+</body>
+</html>
